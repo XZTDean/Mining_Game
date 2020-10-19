@@ -1,7 +1,5 @@
 package ca.cmpt276.as3.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class GameBoard {
@@ -61,48 +59,46 @@ public class GameBoard {
             return false;
         } else if (cell.isMine() && !cell.isMineRevealed()) { // Find a mine
             cell.revealMine();
-            changeAroundNumber(x, y);
+            changeRelevantCellNumber(x, y);
             mineFound++;
         } else {
-            int mines = getAroundMines(x, y);
-            cell.setMinesAround(mines);
+            int mines = getRelevantMines(x, y);
+            cell.setMinesRelevant(mines);
             scanUsed++;
         }
         return true;
     }
 
-    private void changeAroundNumber(int x, int y) {
-        for (Cell around : getAroundCell(x, y)) {
-            if (!around.isHidden()) {
-                around.aroundMineRevealed();
+    private void changeRelevantCellNumber(int x, int y) {
+        for (int i = 0; i < width; i++) {
+            Cell cell = getCell(i, y);
+            if (!cell.isHidden()) {
+                cell.relevantMineRevealed();
+            }
+        }
+        for (int i = 0; i < height; i++) {
+            Cell cell = getCell(x, i);
+            if (!cell.isHidden()) {
+                cell.relevantMineRevealed();
             }
         }
     }
 
-    private int getAroundMines(int x, int y) {
+    private int getRelevantMines(int x, int y) {
         int mines = 0;
-        for (Cell around : getAroundCell(x, y)) {
-            if (around.isMine() && !around.isMineRevealed()) {
+        for (int i = 0; i < width; i++) {
+            Cell cell = getCell(i, y);
+            if (cell.isMine() && !cell.isMineRevealed()) {
+                mines++;
+            }
+        }
+        for (int i = 0; i < height; i++) {
+            Cell cell = getCell(x, i);
+            if (cell.isMine() && !cell.isMineRevealed()) {
                 mines++;
             }
         }
         return mines;
-    }
-
-    private List<Cell> getAroundCell(int x, int y) {
-        List<Cell> around = new ArrayList<>();
-        for (int i = y - 1; i <= y + 1; i++) {
-            if (i >= height || i < 0) {
-                continue;
-            }
-            for (int j = x - 1; j <= x + 1; j++) {
-                if (j >= width || j < 0) {
-                    continue;
-                }
-                around.add(getCell(j, i));
-            }
-        }
-        return around;
     }
 
     public int getScanUsed() {
