@@ -4,7 +4,7 @@ public class Cell {
     private boolean mine;
     private boolean mineRevealed;
     private boolean hidden;
-    private int minesAround;
+    private int minesRelevant;
 
     public Cell() {
         mine = false;
@@ -16,29 +16,29 @@ public class Cell {
         this.mine = true;
     }
 
-    public void revealAround() {
+    private void revealRelevant() {
         if (mine && !mineRevealed) {
             throw new IllegalStateException();
         }
         this.hidden = false;
     }
 
-    public void setMinesAround(int minesAround) {
+    public void setMinesRelevant(int minesRelevant) {
         if (!hidden) {
             throw new IllegalStateException("Already reveal");
-        } else if (minesAround < 0) {
+        } else if (minesRelevant < 0) {
             throw new IllegalArgumentException("Mines around should not smaller than 0");
         }
-        this.minesAround = minesAround;
-        revealAround();
+        this.minesRelevant = minesRelevant;
+        revealRelevant();
     }
 
-    public void aroundMineRevealed() {
+    public void relevantMineRevealed() {
         if (hidden) {
             throw new IllegalStateException("Cell is hidden");
         }
-        minesAround--;
-        if (minesAround < 0) {
+        minesRelevant--;
+        if (minesRelevant < 0) {
             throw new IllegalStateException("Mines around should not smaller than 0");
         }
     }
@@ -50,9 +50,9 @@ public class Cell {
         this.mineRevealed = true;
     }
 
-    public int getMinesAround() {
+    public int getMinesRelevant() {
         if (!hidden) {
-            return minesAround;
+            return minesRelevant;
         } else {
             throw new IllegalStateException();
         }

@@ -1,7 +1,5 @@
 package ca.cmpt276.as3.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class GameBoard {
@@ -64,7 +62,7 @@ public class GameBoard {
             changeRelevantCellNumber(x, y);
         } else {
             int mines = getRelevantMines(x, y);
-            cell.setMinesAround(mines);
+            cell.setMinesRelevant(mines);
         }
         return true;
     }
@@ -73,13 +71,13 @@ public class GameBoard {
         for (int i = 0; i < width; i++) {
             Cell cell = getCell(i, y);
             if (!cell.isHidden()) {
-                cell.aroundMineRevealed();
+                cell.relevantMineRevealed();
             }
         }
         for (int i = 0; i < height; i++) {
             Cell cell = getCell(x, i);
             if (!cell.isHidden()) {
-                cell.aroundMineRevealed();
+                cell.relevantMineRevealed();
             }
         }
     }
