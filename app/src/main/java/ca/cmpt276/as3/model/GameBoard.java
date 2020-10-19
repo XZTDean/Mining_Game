@@ -60,9 +60,11 @@ public class GameBoard {
         } else if (cell.isMine() && !cell.isMineRevealed()) { // Find a mine
             cell.revealMine();
             changeRelevantCellNumber(x, y);
+            mineFound++;
         } else {
             int mines = getRelevantMines(x, y);
             cell.setMinesRelevant(mines);
+            scanUsed++;
         }
         return true;
     }
