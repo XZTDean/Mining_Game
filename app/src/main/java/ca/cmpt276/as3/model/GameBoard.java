@@ -63,7 +63,7 @@ public class GameBoard {
             cell.revealMine();
             changeAroundNumber(x, y);
         } else {
-            int mines = getAroundMines(x, y);
+            int mines = getRelevantMines(x, y);
             cell.setMinesAround(mines);
         }
         return true;
@@ -77,10 +77,17 @@ public class GameBoard {
         }
     }
 
-    private int getAroundMines(int x, int y) {
+    private int getRelevantMines(int x, int y) {
         int mines = 0;
-        for (Cell around : getAroundCell(x, y)) {
-            if (around.isMine() && !around.isMineRevealed()) {
+        for (int i = 0; i < width; i++) {
+            Cell cell = getCell(i, y);
+            if (cell.isMine() && !cell.isMineRevealed()) {
+                mines++;
+            }
+        }
+        for (int i = 0; i < height; i++) {
+            Cell cell = getCell(x, i);
+            if (cell.isMine() && !cell.isMineRevealed()) {
                 mines++;
             }
         }
