@@ -5,12 +5,26 @@ import java.util.List;
 import java.util.Random;
 
 public class GameBoard {
+    private static GameBoard instance;
     private Cell[][] board;
     private int scanUsed;
     private int mineFound;
     private int mineNumber;
     private int width;
     private int height;
+
+    public static GameBoard getInstance(int width, int height, int mineNumber) {
+        if (instance == null) {
+            instance = new GameBoard(width, height, mineNumber);
+        }
+        return instance;
+    }
+
+    public static GameBoard endGame() {
+        GameBoard game = instance;
+        instance = null;
+        return game;
+    }
 
     public GameBoard(int width, int height, int mineNumber) {
         if (width <= 0 || height <= 0) {
