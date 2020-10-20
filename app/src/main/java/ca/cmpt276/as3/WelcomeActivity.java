@@ -10,6 +10,7 @@ import android.widget.Button;
 
 public class WelcomeActivity extends AppCompatActivity {
     final int waitingTime = 4000;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,7 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
 
-        Handler handler = new Handler();
+        handler = new Handler();
         handler.postDelayed(this::skip, waitingTime);
     }
 
@@ -32,6 +33,7 @@ public class WelcomeActivity extends AppCompatActivity {
         Intent intent = MainActivity.makeIntent(this);
         startActivity(intent);
         finish();
+        handler.removeCallbacksAndMessages(null);
     }
 
 
