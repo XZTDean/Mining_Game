@@ -3,7 +3,6 @@ package ca.cmpt276.as3.model;
 import java.util.Random;
 
 public class GameBoard {
-    private static GameBoard instance;
     private Cell[][] board;
     private int scanUsed;
     private int mineFound;
@@ -11,30 +10,18 @@ public class GameBoard {
     private int width;
     private int height;
 
-    public static GameBoard getInstance(int width, int height, int mineNumber) {
-        if (instance == null) {
-            instance = new GameBoard(width, height, mineNumber);
-        }
-        return instance;
-    }
-
-    public static GameBoard endGame() {
-        GameBoard game = instance;
-        instance = null;
-        return game;
-    }
-
-    public GameBoard(int width, int height, int mineNumber) {
-        if (width <= 0 || height <= 0) {
+    public GameBoard() {
+        GameConfig config = GameConfig.getInstance();
+        if (config.getWidth() <= 0 || config.getHeight() <= 0) {
             throw new IllegalArgumentException("Width and Height should be positive");
-        } else if (mineNumber > width * height) {
+        } else if (config.getMineNumber() > config.getWidth() * config.getHeight()) {
             throw new IllegalArgumentException("Too many mines");
         }
 
-        this.width = width;
-        this.height = height;
+        this.width = config.getWidth();
+        this.height = config.getHeight();
         this.board = new Cell[height][width];
-        this.mineNumber = mineNumber;
+        this.mineNumber = config.getMineNumber();
         scanUsed = mineFound = 0;
         setMine();
     }
