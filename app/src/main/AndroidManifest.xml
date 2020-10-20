@@ -11,8 +11,8 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".WelcomeActivity"
-            android:theme="@style/AppTheme.WelcomePage"
-            android:screenOrientation="userLandscape">
+            android:screenOrientation="userLandscape"
+            android:theme="@style/AppTheme.WelcomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,6 +21,15 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="userLandscape" />
+        <activity
+            android:name=".HelpActivity"
+            android:screenOrientation="userLandscape" />
+        <activity
+            android:name=".OptionActivity"
+            android:screenOrientation="userLandscape" />
+        <activity
+            android:name=".GameActivity"
             android:screenOrientation="userLandscape" />
     </application>
 
