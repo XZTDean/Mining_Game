@@ -7,7 +7,7 @@
     tools:context=".WelcomeActivity">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/mask_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
@@ -39,7 +39,7 @@
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="@+id/mask_background"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.25" />
@@ -52,7 +52,7 @@
         app:layout_constraintGuide_percent="0.50" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/authorWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/author"
