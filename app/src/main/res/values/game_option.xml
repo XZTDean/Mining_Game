@@ -1,0 +1,18 @@
+<resources>
+    <integer-array name="board_width">
+        <item>6</item>
+        <item>10</item>
+        <item>15</item>
+    </integer-array>
+    <integer-array name="board_height">
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </integer-array>
+    <integer-array name="mine_num">
+        <item>6</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+    </integer-array>
+</resources>

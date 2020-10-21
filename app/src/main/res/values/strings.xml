@@ -14,4 +14,7 @@
     <string name="start">Start</string>
     <string name="option">Option</string>
     <string name="help">help</string>
+    <string name="board_size_show">"%1$d&#160;X&#160;%2$d"</string>
+    <string name="select_mine_number">Number of confirmed cases:</string>
+    <string name="select_board_size">The size of relation map:</string>
 </resources>
