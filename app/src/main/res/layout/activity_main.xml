@@ -69,12 +69,14 @@
         app:layout_constraintGuide_percent="0.4" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/mainPageImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/earth_mask" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
