@@ -15,4 +15,7 @@
         <item>15</item>
         <item>20</item>
     </integer-array>
+    <integer name="default_mine_num">6</integer>
+    <integer name="default_board_width">6</integer>
+    <integer name="default_board_height">4</integer>
 </resources>

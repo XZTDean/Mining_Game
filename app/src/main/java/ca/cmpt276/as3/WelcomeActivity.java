@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 
+import ca.cmpt276.as3.model.GameConfig;
+
 public class WelcomeActivity extends AppCompatActivity {
     final int waitingTime = 4000;
     private Handler handler;
@@ -25,6 +27,8 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
 
+        readConfig();
+
         handler = new Handler();
         handler.postDelayed(this::skip, waitingTime);
     }
@@ -34,6 +38,13 @@ public class WelcomeActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
         handler.removeCallbacksAndMessages(null);
+    }
+
+    private void readConfig() {
+        GameConfig config = GameConfig.getInstance();
+        config.setMineNumber(OptionActivity.getValue(this, OptionActivity.MINE_KEY));
+        config.setWidth(OptionActivity.getValue(this, OptionActivity.WIDTH_KEY));
+        config.setHeight(OptionActivity.getValue(this, OptionActivity.HEIGHT_KEY));
     }
 
 

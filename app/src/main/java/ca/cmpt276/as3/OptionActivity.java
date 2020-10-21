@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
@@ -12,6 +13,10 @@ import android.widget.RadioGroup;
 import ca.cmpt276.as3.model.GameConfig;
 
 public class OptionActivity extends AppCompatActivity {
+
+    public static final String MINE_KEY = "Number of mine";
+    public static final String WIDTH_KEY = "Width of board";
+    public static final String HEIGHT_KEY = "Height of board";
 
     public static Intent makeIntent(Context c) {
         return new Intent(c, OptionActivity.class);
@@ -43,7 +48,9 @@ public class OptionActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     GameConfig config = GameConfig.getInstance();
                     config.setWidth(width);
+                    saveValue(WIDTH_KEY, width);
                     config.setHeight(height);
+                    saveValue(HEIGHT_KEY, height);
                 }
             });
 
@@ -69,6 +76,7 @@ public class OptionActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     GameConfig config = GameConfig.getInstance();
                     config.setMineNumber(num);
+                    saveValue(MINE_KEY, num);
                 }
             });
 
@@ -79,5 +87,31 @@ public class OptionActivity extends AppCompatActivity {
                 button.setChecked(true);
             }
         }
+    }
+
+    private void saveValue(String key, int num) {
+        SharedPreferences prefs = this.getSharedPreferences("AppPreference", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(key, num);
+        editor.apply();
+    }
+
+    static public int getValue(Context context, String key) {
+        SharedPreferences prefs = context.getSharedPreferences("AppPreference", MODE_PRIVATE);
+        int defaultSize;
+        switch (key) {
+            case MINE_KEY:
+                defaultSize = context.getResources().getInteger(R.integer.default_mine_num);
+                break;
+            case WIDTH_KEY:
+                defaultSize = context.getResources().getInteger(R.integer.default_board_width);
+                break;
+            case HEIGHT_KEY:
+                defaultSize = context.getResources().getInteger(R.integer.default_board_height);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + key);
+        }
+        return prefs.getInt(key, defaultSize);
     }
 }
