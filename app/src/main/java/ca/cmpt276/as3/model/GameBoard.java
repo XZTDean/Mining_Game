@@ -23,6 +23,11 @@ public class GameBoard {
         this.board = new Cell[height][width];
         this.mineNumber = config.getMineNumber();
         scanUsed = mineFound = 0;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                board[i][j] = new Cell();
+            }
+        }
         setMine();
     }
 
@@ -40,20 +45,25 @@ public class GameBoard {
         }
     }
 
-    public boolean scan(int x, int y) {
+    public int scan(int x, int y) {
         Cell cell = getCell(x, y);
         if (!cell.isHidden()) { // already display the number
-            return false;
+            return -1;
         } else if (cell.isMine() && !cell.isMineRevealed()) { // Find a mine
             cell.revealMine();
             changeRelevantCellNumber(x, y);
             mineFound++;
+            return 1;
         } else {
             int mines = getRelevantMines(x, y);
             cell.setMinesRelevant(mines);
             scanUsed++;
+            if (cell.isMine()) {
+                return 2;
+            } else {
+                return 0;
+            }
         }
-        return true;
     }
 
     private void changeRelevantCellNumber(int x, int y) {
@@ -116,5 +126,17 @@ public class GameBoard {
             throw new IndexOutOfBoundsException();
         }
         return board[y][x];
+    }
+
+    public int getMineRelevantForCell(int x, int y) {
+        return getCell(x, y).getMinesRelevant();
+    }
+
+    public boolean cellIsHidden(int x, int y) {
+        return getCell(x, y).isHidden();
+    }
+
+    public boolean isWin() {
+        return mineFound == mineNumber;
     }
 }
