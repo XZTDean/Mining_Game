@@ -7,4 +7,11 @@
     <string name="ok">OK</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="wining">You find out all the positive cases!</string>
+    <string name="scanUse">Scan Used:</string>
+    <string name="_0">0</string>
+    <string name="positive_cases">Positive Cases:</string>
+    <string name="slash">&#160;/&#160;</string>
+    <string name="start">Start</string>
+    <string name="option">Option</string>
+    <string name="help">help</string>
 </resources>
