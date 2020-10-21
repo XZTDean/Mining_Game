@@ -5,4 +5,7 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="background">#F9DF84</color>
+    <color name="potential">#FF9800</color>
+    <color name="confirmed">#F44336</color>
+    <color name="safe">#4CAF50</color>
 </resources>
