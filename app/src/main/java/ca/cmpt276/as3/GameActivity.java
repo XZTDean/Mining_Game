@@ -2,6 +2,7 @@ package ca.cmpt276.as3;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -172,5 +173,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void win() {
+        WinDialogFragment winDialog = new WinDialogFragment();
+        winDialog.show(getSupportFragmentManager(), "WinDialogFragment");
     }
 }
