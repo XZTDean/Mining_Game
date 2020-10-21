@@ -15,6 +15,9 @@ public class GameConfig {
     }
 
     private GameConfig() {
+        mineNumber = 6;
+        width = 6;
+        height = 4;
     }
 
     public int getMineNumber() {
