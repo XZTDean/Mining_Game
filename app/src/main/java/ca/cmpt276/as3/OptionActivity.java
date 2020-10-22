@@ -27,6 +27,11 @@ import java.util.List;
 import ca.cmpt276.as3.model.GameConfig;
 import ca.cmpt276.as3.model.GameHistory;
 
+/**
+ * This is class for option choosing page, it will read and update
+ * history data, and display history data to user. It saved the
+ * change of the config, both in memory and disk.
+ */
 public class OptionActivity extends AppCompatActivity {
 
     public static final String MINE_KEY = "Number of mine";

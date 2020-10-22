@@ -12,6 +12,11 @@ import android.widget.TextView;
 
 import ca.cmpt276.as3.model.GameHistory;
 
+/**
+ * This is class for dialog when user win, it display congratulation
+ * message and tell the best score, when user press OK, it will
+ * terminate game activity.
+ */
 public class WinDialogFragment extends DialogFragment {
 
     private static final String BEST_SCORE = "BEST_SCORE";

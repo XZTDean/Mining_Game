@@ -2,6 +2,11 @@ package ca.cmpt276.as3.model;
 
 import java.util.Objects;
 
+/**
+ * Game history store the history of game, it identified by GameConfig
+ * the smaller bestScore is better in this game.
+ * This class always be convert to JSON to store in disk.
+ */
 public class GameHistory {
     private int width;
     private int height;

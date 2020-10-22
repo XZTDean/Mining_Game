@@ -1,5 +1,9 @@
 package ca.cmpt276.as3.model;
 
+/**
+ * Cell store the information of each cell in the game,
+ * including whether it is mine, whether it is revealed and etc.
+ */
 public class Cell {
     private boolean mine;
     private boolean mineRevealed;

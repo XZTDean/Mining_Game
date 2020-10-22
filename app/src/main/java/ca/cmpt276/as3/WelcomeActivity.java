@@ -10,6 +10,11 @@ import android.widget.Button;
 
 import ca.cmpt276.as3.model.GameConfig;
 
+/**
+ * This is class for welcome page, it contain a button
+ * "skip" to navigate to menu page immediately. It read
+ * config data from disk.
+ */
 public class WelcomeActivity extends AppCompatActivity {
     final int waitingTime = 4000;
     private Handler handler;

@@ -7,6 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+/**
+ * This class is for the menu page, it set up buttons
+ * to jump to other pages
+ */
 public class MainActivity extends AppCompatActivity {
 
     public static Intent makeIntent(Context c) {

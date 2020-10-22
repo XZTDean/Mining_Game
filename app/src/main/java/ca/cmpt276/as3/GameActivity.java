@@ -32,6 +32,12 @@ import ca.cmpt276.as3.model.GameBoard;
 import ca.cmpt276.as3.model.GameConfig;
 import ca.cmpt276.as3.model.GameHistory;
 
+/**
+ * This Class is the java for game page, it will create
+ * a game according to the config and generate appropriate
+ * UI. It will update the history data which keep the
+ * number of game played and the best score.
+ */
 public class GameActivity extends AppCompatActivity {
     private GameBoard game;
     private FloatingActionButton[][] buttons;

@@ -1,5 +1,10 @@
 package ca.cmpt276.as3.model;
 
+/**
+ * Game config store the config information of game
+ * This is a singleton pattern class, by using getInstance
+ * there will be same copy of information provided.
+ */
 public class GameConfig {
     private static GameConfig instance;
 

@@ -2,6 +2,10 @@ package ca.cmpt276.as3.model;
 
 import java.util.Random;
 
+/**
+ * GameBoard class keep the information for each game, it get
+ * config directly from GameConfig.
+ */
 public class GameBoard {
     private Cell[][] board;
     private int scanUsed;

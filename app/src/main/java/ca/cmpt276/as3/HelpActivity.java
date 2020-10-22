@@ -9,6 +9,9 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
+/**
+ * This class is java class for help page
+ */
 public class HelpActivity extends AppCompatActivity {
 
     public static Intent makeIntent(Context c) {
