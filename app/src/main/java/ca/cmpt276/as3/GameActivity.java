@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -228,7 +227,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private GameHistory updateWin() throws IOException {
-        File historyFile = new File(this.getFilesDir(), "history");
+        File historyFile = new File(this.getFilesDir(), GameHistory.HISTORY_DIR);
         String json = readFromFile(historyFile);
         Gson gson = new Gson();
         Type collectionType = new TypeToken<ArrayList<GameHistory>>(){}.getType();
@@ -242,7 +241,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void updateHistory() throws IOException {
-        File historyFile = new File(this.getFilesDir(), "history");
+        File historyFile = new File(this.getFilesDir(), GameHistory.HISTORY_DIR);
         String json = readFromFile(historyFile);
         Gson gson = new Gson();
         Type collectionType = new TypeToken<ArrayList<GameHistory>>(){}.getType();

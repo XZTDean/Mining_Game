@@ -169,7 +169,7 @@ public class OptionActivity extends AppCompatActivity {
     private void getHistory() {
         String json = null;
         try {
-            File historyFile = new File(this.getFilesDir(), "history");
+            File historyFile = new File(this.getFilesDir(), GameHistory.HISTORY_DIR);
             json = readFromFile(historyFile);
         } catch (IOException e) {
             e.printStackTrace();
@@ -180,7 +180,7 @@ public class OptionActivity extends AppCompatActivity {
     }
 
     private void saveHistory() {
-        File historyFile = new File(this.getFilesDir(), "history");
+        File historyFile = new File(this.getFilesDir(), GameHistory.HISTORY_DIR);
         Gson gson = new Gson();
         String json = gson.toJson(historyList);
         try {

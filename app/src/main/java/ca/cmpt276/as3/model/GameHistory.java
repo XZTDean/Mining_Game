@@ -13,6 +13,7 @@ public class GameHistory {
     private int mineNumber;
     private int gameNumber;
     private int bestScore;
+    public static String HISTORY_DIR = "history.dat";
 
     public GameHistory() {
     }
