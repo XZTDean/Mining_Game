@@ -7,16 +7,32 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import ca.cmpt276.as3.model.GameConfig;
+import ca.cmpt276.as3.model.GameHistory;
 
 public class OptionActivity extends AppCompatActivity {
 
     public static final String MINE_KEY = "Number of mine";
     public static final String WIDTH_KEY = "Width of board";
     public static final String HEIGHT_KEY = "Height of board";
+    private List<GameHistory> historyList;
 
     public static Intent makeIntent(Context c) {
         return new Intent(c, OptionActivity.class);
@@ -29,6 +45,21 @@ public class OptionActivity extends AppCompatActivity {
 
         createBoardSizeSelection();
         createMineSelection();
+
+        Button button = findViewById(R.id.clear_history);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GameHistory history = getHistoryByConfig(GameConfig.getInstance());
+                history.clear();
+                updateHistoryDisplay(history);
+                saveHistory();
+            }
+        });
+
+        getHistory();
+        GameHistory history = getHistoryByConfig(GameConfig.getInstance());
+        updateHistoryDisplay(history);
     }
 
     private void createBoardSizeSelection() {
@@ -51,6 +82,8 @@ public class OptionActivity extends AppCompatActivity {
                     saveValue(WIDTH_KEY, width);
                     config.setHeight(height);
                     saveValue(HEIGHT_KEY, height);
+                    GameHistory history = getHistoryByConfig(config);
+                    updateHistoryDisplay(history);
                 }
             });
 
@@ -77,6 +110,8 @@ public class OptionActivity extends AppCompatActivity {
                     GameConfig config = GameConfig.getInstance();
                     config.setMineNumber(num);
                     saveValue(MINE_KEY, num);
+                    GameHistory history = getHistoryByConfig(config);
+                    updateHistoryDisplay(history);
                 }
             });
 
@@ -87,6 +122,17 @@ public class OptionActivity extends AppCompatActivity {
                 button.setChecked(true);
             }
         }
+    }
+
+    private void updateHistoryDisplay(GameHistory history) {
+        TextView textView = findViewById(R.id.num_played);
+        String str = getString(R.string.num_played, history.getGameNumber());
+        if (history.getBestScore() < 0) {
+            str += getString(R.string.no_best_score);
+        } else {
+            str += getString(R.string.best_score, history.getBestScore());
+        }
+        textView.setText(str);
     }
 
     private void saveValue(String key, int num) {
@@ -113,5 +159,60 @@ public class OptionActivity extends AppCompatActivity {
                 throw new IllegalStateException("Unexpected value: " + key);
         }
         return prefs.getInt(key, defaultSize);
+    }
+
+    private void getHistory() {
+        String json = null;
+        try {
+            File historyFile = new File(this.getFilesDir(), "history");
+            json = readFromFile(historyFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        Type collectionType = new TypeToken<ArrayList<GameHistory>>(){}.getType();
+        historyList = gson.fromJson(json, collectionType);
+    }
+
+    private void saveHistory() {
+        File historyFile = new File(this.getFilesDir(), "history");
+        Gson gson = new Gson();
+        String json = gson.toJson(historyList);
+        try {
+            writeToFile(historyFile, json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void writeToFile(File file, String json) throws IOException {
+        FileWriter writer = new FileWriter(file);
+        writer.write(json);
+        writer.close();
+    }
+
+    private String readFromFile(File file) throws IOException {
+        if (!file.exists()) {
+            return "[]";
+        }
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        StringBuilder builder = new StringBuilder();
+        String tmp;
+        while ((tmp = reader.readLine()) != null) {
+            builder.append(tmp).append('\n');
+        }
+        return builder.toString();
+    }
+
+    private GameHistory getHistoryByConfig(GameConfig config) {
+        for (GameHistory history : historyList) {
+            if (history.isEqualConfig(config)) {
+                return history;
+            }
+        }
+        GameHistory gameHistory = new GameHistory(config);
+        historyList.add(gameHistory);
+        saveHistory();
+        return gameHistory;
     }
 }
