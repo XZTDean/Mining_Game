@@ -34,5 +34,12 @@
         trophy icon come from
         https://www.flaticon.com/free-icon/trophy_3593584</string>
     <string name="help_page_author">Author: Zeti Xiong\nCourse: CMPT276</string>
+    <string name="num_played">You have played %1$d times and&#160;</string>
+    <string name="no_best_score">there is no score yet.</string>
+    <string name="best_score">the best score is %1$d.</string>
+    <string name="remove_history">Remove History</string>
+    <string name="win_page_current_scan">You used %1$d scans in this game.</string>
+    <string name="win_page_best_score">&#160;The best score is %1$d</string>
+    <string name="win_page_same_score">&#160;You are the best score!</string>
 
 </resources>

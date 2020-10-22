@@ -2,7 +2,6 @@ package ca.cmpt276.as3;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentManager;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -17,11 +16,21 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import ca.cmpt276.as3.model.GameBoard;
 import ca.cmpt276.as3.model.GameConfig;
-
-import static java.security.AccessController.getContext;
+import ca.cmpt276.as3.model.GameHistory;
 
 public class GameActivity extends AppCompatActivity {
     private GameBoard game;
@@ -37,6 +46,11 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         game = new GameBoard();
         populateTable();
+        try {
+            updateHistory();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         TextView textView = findViewById(R.id.mineTotal);
         String totalMine = String.valueOf(game.getMineNumber());
@@ -175,7 +189,7 @@ public class GameActivity extends AppCompatActivity {
         ObjectAnimator animation = ObjectAnimator.ofFloat(button, "alpha", 1f, 0.3f);
         animation.setRepeatCount(1);
         animation.setRepeatMode(ObjectAnimator.REVERSE);
-        animation.setDuration(300);
+        animation.setDuration(200);
         animation.start();
     }
 
@@ -189,7 +203,81 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void win() {
-        WinDialogFragment winDialog = new WinDialogFragment();
+        GameHistory history = null;
+        try {
+            history = updateWin();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert history != null;
+
+        WinDialogFragment winDialog = WinDialogFragment.getInstance(history, game.getScanUsed());
         winDialog.show(getSupportFragmentManager(), "WinDialogFragment");
+    }
+
+    private GameHistory updateWin() throws IOException {
+        File historyFile = new File(this.getFilesDir(), "history");
+        String json = readFromFile(historyFile);
+        Gson gson = new Gson();
+        Type collectionType = new TypeToken<ArrayList<GameHistory>>(){}.getType();
+        List<GameHistory> historyList = gson.fromJson(json, collectionType);
+        GameHistory history = getHistory(historyList);
+        if (updateBestScore(history)) {
+            json = gson.toJson(historyList);
+            writeToFile(historyFile, json);
+        }
+        return history;
+    }
+
+    private void updateHistory() throws IOException {
+        File historyFile = new File(this.getFilesDir(), "history");
+        String json = readFromFile(historyFile);
+        Gson gson = new Gson();
+        Type collectionType = new TypeToken<ArrayList<GameHistory>>(){}.getType();
+        List<GameHistory> historyList = gson.fromJson(json, collectionType);
+        addDate(historyList);
+        json = gson.toJson(historyList);
+        writeToFile(historyFile, json);
+    }
+
+    private GameHistory getHistory(List<GameHistory> historyList) {
+        GameConfig config = GameConfig.getInstance();
+        for (GameHistory history : historyList) {
+            if (history.isEqualConfig(config)) {
+                return history;
+            }
+        }
+        GameHistory gameHistory = new GameHistory(config);
+        historyList.add(gameHistory);
+        return gameHistory;
+    }
+
+    private boolean updateBestScore(GameHistory history) {
+        int score = game.getScanUsed();
+        return history.updateBestScore(score);
+    }
+
+    private void addDate(List<GameHistory> historyList) {
+        GameHistory history = getHistory(historyList);
+        history.increaseGameNumber();
+    }
+
+    private void writeToFile(File file, String json) throws IOException {
+        FileWriter writer = new FileWriter(file);
+        writer.write(json);
+        writer.close();
+    }
+
+    private String readFromFile(File file) throws IOException {
+        if (!file.exists()) {
+            return "[]";
+        }
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        StringBuilder builder = new StringBuilder();
+        String tmp;
+        while ((tmp = reader.readLine()) != null) {
+            builder.append(tmp).append('\n');
+        }
+        return builder.toString();
     }
 }
