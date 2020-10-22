@@ -25,7 +25,7 @@ public class GameHistory {
         height = config.getHeight();
         mineNumber = config.getMineNumber();
         gameNumber = 0;
-        bestScore = width * height + 1;
+        bestScore = -1;
     }
 
     public int getWidth() {
@@ -44,22 +44,29 @@ public class GameHistory {
         return gameNumber;
     }
 
+    public void increaseGameNumber() {
+        gameNumber++;
+    }
+
     public void setGameNumber(int gameNumber) {
         this.gameNumber = gameNumber;
     }
 
     public int getBestScore() {
-        if (bestScore > width * height) {
-            return -1;
-        }
         return bestScore;
     }
 
-    public void setBestScore(int bestScore) {
-        if (bestScore == -1) {
-            this.bestScore = width * height + 1;
+    public boolean updateBestScore(int score) {
+        if (score < bestScore || bestScore == -1) {
+            bestScore = score;
+            return true;
         }
-        this.bestScore = bestScore;
+        return false;
+    }
+
+    public void clear() {
+        bestScore = -1;
+        gameNumber = 0;
     }
 
     public boolean isEqualConfig(GameConfig config) {

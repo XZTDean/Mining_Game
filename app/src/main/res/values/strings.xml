@@ -34,5 +34,9 @@
         trophy icon come from
         https://www.flaticon.com/free-icon/trophy_3593584</string>
     <string name="help_page_author">Author: Zeti Xiong\nCourse: CMPT276</string>
+    <string name="num_played">You have played %1$d times and&#160;</string>
+    <string name="no_best_score">there is no score yet.</string>
+    <string name="best_score">the best score is %1$d.</string>
+    <string name="remove_history">Remove History</string>
 
 </resources>

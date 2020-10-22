@@ -17,9 +17,23 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import ca.cmpt276.as3.model.GameBoard;
 import ca.cmpt276.as3.model.GameConfig;
+import ca.cmpt276.as3.model.GameHistory;
 
 import static java.security.AccessController.getContext;
 
@@ -37,6 +51,11 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         game = new GameBoard();
         populateTable();
+        try {
+            updateHistory();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         TextView textView = findViewById(R.id.mineTotal);
         String totalMine = String.valueOf(game.getMineNumber());
@@ -191,5 +210,77 @@ public class GameActivity extends AppCompatActivity {
     private void win() {
         WinDialogFragment winDialog = new WinDialogFragment();
         winDialog.show(getSupportFragmentManager(), "WinDialogFragment");
+
+        try {
+            updateHWin();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateHWin() throws IOException {
+        File historyFile = new File(this.getFilesDir(), "history");
+        String json = readFromFile(historyFile);
+        Gson gson = new Gson();
+        Type collectionType = new TypeToken<ArrayList<GameHistory>>(){}.getType();
+        List<GameHistory> historyList = gson.fromJson(json, collectionType);
+        if (updateBestScore(historyList)) {
+            json = gson.toJson(historyList);
+            writeToFile(historyFile, json);
+        }
+    }
+
+    private boolean updateBestScore(List<GameHistory> historyList) {
+        GameConfig config = GameConfig.getInstance();
+        for (GameHistory history : historyList) {
+            if (history.isEqualConfig(config)) {
+                int score = game.getScanUsed();
+                return history.updateBestScore(score);
+            }
+        }
+        return false;
+    }
+
+    private void updateHistory() throws IOException {
+        File historyFile = new File(this.getFilesDir(), "history");
+        String json = readFromFile(historyFile);
+        Gson gson = new Gson();
+        Type collectionType = new TypeToken<ArrayList<GameHistory>>(){}.getType();
+        List<GameHistory> historyList = gson.fromJson(json, collectionType);
+        addDate(historyList);
+        json = gson.toJson(historyList);
+        writeToFile(historyFile, json);
+    }
+
+    private void addDate(List<GameHistory> historyList) {
+        GameConfig config = GameConfig.getInstance();
+        for (GameHistory history : historyList) {
+            if (history.isEqualConfig(config)) {
+                history.increaseGameNumber();
+                return;
+            }
+        }
+        GameHistory gameHistory = new GameHistory(config);
+        gameHistory.increaseGameNumber();
+        historyList.add(gameHistory);
+    }
+
+    private void writeToFile(File file, String json) throws IOException {
+        FileWriter writer = new FileWriter(file);
+        writer.write(json);
+        writer.close();
+    }
+
+    private String readFromFile(File file) throws IOException {
+        if (!file.exists()) {
+            return "[]";
+        }
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        StringBuilder builder = new StringBuilder();
+        String tmp;
+        while ((tmp = reader.readLine()) != null) {
+            builder.append(tmp).append('\n');
+        }
+        return builder.toString();
     }
 }
