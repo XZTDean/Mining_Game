@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -78,7 +79,12 @@ public class GameActivity extends AppCompatActivity {
                         TableRow.LayoutParams.MATCH_PARENT,
                         TableRow.LayoutParams.MATCH_PARENT,
                         1);
-                layoutParams.setMargins(8,8,8,8);
+                if (config.getWidth() >= 10) {
+                    layoutParams.setMargins(8,8,8,8);
+                } else {
+                    layoutParams.setMargins(16,16,16,16);
+                }
+                button.setSize(FloatingActionButton.SIZE_MINI);
                 button.setLayoutParams(layoutParams);
 
                 button.setImageResource(R.drawable.ic_user);
