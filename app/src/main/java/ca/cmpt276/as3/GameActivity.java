@@ -8,6 +8,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -84,14 +85,17 @@ public class GameActivity extends AppCompatActivity {
     private void scan(int col, int row) {
         switch (game.scan(col, row)) {
             case -1: // already scan
+                playSound(R.raw.deny);
                 break;
             case 0: // new scan
                 setNumber(col, row, true);
+                playSound(R.raw.number);
                 scanRowCol(col, row);
                 setScanNum();
                 break;
             case 1: // new mine
                 setMine(col, row);
+                playSound(R.raw.mine);
                 reSetRelevantNumber(col, row);
                 setFoundNumber();
                 if (game.isWin()) {
@@ -100,9 +104,21 @@ public class GameActivity extends AppCompatActivity {
                 break;
             case 2: // mine with scan
                 setNumber(col, row, false);
+                playSound(R.raw.number);
                 scanRowCol(col, row);
                 setScanNum();
         }
+    }
+
+    private void playSound(int resid) {
+        MediaPlayer mp = MediaPlayer.create(this, resid);
+        mp.start();
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.release();
+            }
+        });
     }
 
     private void setFoundNumber() {
