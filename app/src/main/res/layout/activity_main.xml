@@ -36,21 +36,21 @@
             android:id="@+id/startGame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#F86018"
+            android:backgroundTint="@color/btn_start_game"
             android:text="@string/start" />
 
         <Button
             android:id="@+id/option"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#EAE7E7"
+            android:backgroundTint="@color/btn_not_selected"
             android:text="@string/option" />
 
         <Button
             android:id="@+id/helpPage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#EAE7E7"
+            android:backgroundTint="@color/btn_not_selected"
             android:text="@string/help" />
     </LinearLayout>
 
