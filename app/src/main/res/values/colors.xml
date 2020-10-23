@@ -8,4 +8,6 @@
     <color name="potential">#FF9800</color>
     <color name="confirmed">#F44336</color>
     <color name="safe">#4CAF50</color>
+    <color name="btn_not_selected">#EAE5BC</color>
+    <color name="btn_selected_help_page">#3F51B5</color>
 </resources>

@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="478dp" />
+        app:layout_constraintGuide_percent="0.6" />
 
     <ImageView
         android:id="@+id/help_page_image"
@@ -39,11 +39,13 @@
     <TextView
         android:id="@+id/help_page_main"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/help_page_main"
+        app:layout_constraintBottom_toBottomOf="@+id/help_page_cite"
         app:layout_constraintEnd_toStartOf="@+id/guideline8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/help_page_heading" />
@@ -51,32 +53,84 @@
     <TextView
         android:id="@+id/help_page_cite"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:autoLink="web"
         android:text="@string/help_page_cite"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/help_page_main"
-        app:layout_constraintStart_toStartOf="@+id/help_page_main"
-        app:layout_constraintTop_toBottomOf="@+id/help_page_main" />
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toStartOf="@+id/guideline8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/help_page_heading" />
 
-    <TextView
+    <LinearLayout
         android:id="@+id/help_page_author"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/help_page_author"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/help_page_cite"
-        app:layout_constraintStart_toStartOf="@+id/help_page_cite"
-        app:layout_constraintTop_toBottomOf="@+id/help_page_cite" />
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/help_page_main"
+        app:layout_constraintEnd_toStartOf="@+id/guideline8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/help_page_heading">
 
-    <TextView
-        android:id="@+id/help_page_hyperlink"
+        <TextView
+            android:id="@+id/help_page_author_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/help_page_author" />
+
+        <TextView
+            android:id="@+id/help_page_hyperlink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/help_page_author"
-        app:layout_constraintStart_toStartOf="@+id/help_page_author"
-        app:layout_constraintTop_toBottomOf="@+id/help_page_author" />
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline8"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/theme_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/btn_selected_help_page"
+            android:text="@string/theme_btn" />
+
+        <Button
+            android:id="@+id/resource_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/btn_not_selected"
+            android:text="@string/copying_btn" />
+
+        <Button
+            android:id="@+id/author_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/btn_not_selected"
+            android:text="@string/author_btn" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
