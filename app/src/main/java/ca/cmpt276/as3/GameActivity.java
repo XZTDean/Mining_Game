@@ -251,6 +251,17 @@ public class GameActivity extends AppCompatActivity {
         writeToFile(historyFile, json);
     }
 
+    private void displayHistory(GameHistory history) {
+        TextView textView = findViewById(R.id.numGame);
+        textView.setText(getString(R.string.num_game, history.getGameNumber()));
+        textView = findViewById(R.id.bestScore);
+        if (history.getBestScore() >= 0) {
+            textView.setText(getString(R.string.best_score_display, history.getBestScore()));
+        } else {
+            textView.setText(R.string.no_best_score_short);
+        }
+    }
+
     private GameHistory getHistory(List<GameHistory> historyList) {
         GameConfig config = GameConfig.getInstance();
         for (GameHistory history : historyList) {
@@ -271,6 +282,7 @@ public class GameActivity extends AppCompatActivity {
     private void addDate(List<GameHistory> historyList) {
         GameHistory history = getHistory(historyList);
         history.increaseGameNumber();
+        displayHistory(history);
     }
 
     private void writeToFile(File file, String json) throws IOException {

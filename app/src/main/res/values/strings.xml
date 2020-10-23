@@ -43,7 +43,7 @@
         >Course Website</a></string>
     <string name="num_played">You have played %1$d times and&#160;</string>
     <string name="no_best_score">there is no score yet.</string>
-    <string name="best_score">the best score is %1$d.</string>
+    <string name="best_score">the best score is %1$d scans.</string>
     <string name="remove_history">Remove History</string>
     <string name="win_page_current_scan">You used %1$d scans in this game.</string>
     <string name="win_page_best_score">&#160;The best score is %1$d</string>
@@ -51,5 +51,10 @@
     <string name="theme_btn">Theme</string>
     <string name="copying_btn">COPYING</string>
     <string name="author_btn">Author</string>
+    <string name="num_game_desc">You have played:</string>
+    <string name="num_game">%1$d times</string>
+    <string name="best_score_desc">Your best Score:</string>
+    <string name="best_score_display">%1$d scans</string>
+    <string name="no_best_score_short">not have yet</string>
 
 </resources>
