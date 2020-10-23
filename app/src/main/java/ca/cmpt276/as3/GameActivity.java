@@ -281,8 +281,8 @@ public class GameActivity extends AppCompatActivity {
 
     private void addDate(List<GameHistory> historyList) {
         GameHistory history = getHistory(historyList);
-        history.increaseGameNumber();
         displayHistory(history);
+        history.increaseGameNumber();
     }
 
     private void writeToFile(File file, String json) throws IOException {
